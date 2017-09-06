@@ -4,9 +4,7 @@ var inquirer = require("inquirer");
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
-    // Your username
     user: "root",
-    // Your password
     password: "password",
     database: "bamazon_db"
 });
@@ -53,8 +51,9 @@ function orderInput (){
    
    var amountRequested = result.quantity;
    
-   var amountInStock= res[i].stock_quantity;
-
+   var amountInStock = res[i].stock_quantity;
+    
+       if (amountRequested > amountInStock){
    console.log("Insufficient Quantity");
    
    orderInput();
@@ -62,7 +61,7 @@ function orderInput (){
    else {
        placeOrder(item, amountRequested, amountInStock, displayPrice, itemID);
      }
-       
+      
     }
     })
   });
