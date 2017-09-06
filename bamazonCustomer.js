@@ -40,7 +40,10 @@ function orderInput() {
             console.log(res.length);
 
                 if (res.length === 0) {
-                    console.log("invalid id");
+                    console.log("---------------");
+                    console.log("Invalid ID");
+                    console.log("---------------");
+                    orderInput();
                 } else {
 
                     for (var i = 0; i < res.length; i++) {
@@ -60,7 +63,9 @@ function orderInput() {
                         var amountInStock = res[i].stock_quantity;
 
                         if (amountRequested > amountInStock) {
+                            console.log("---------------");
                             console.log("Insufficient Quantity");
+                            console.log("---------------");
 
                             orderInput();
                         } else {
