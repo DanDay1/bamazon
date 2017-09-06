@@ -37,30 +37,36 @@ function orderInput() {
         .then(function(result) {
             connection.query("SELECT * FROM products WHERE item_id=?", [result.id], function(err, res) {
 
-                for (var i = 0; i < res.length; i++) {
+            console.log(res.length);
 
-                    var price = (result.quantity * res[i].price);
-                    var roundedPrice = Math.round(price * 100) / 100;
-                    var displayPrice = "$" + roundedPrice;
+                if (res.length === 0) {
+                    console.log("invalid id");
+                } else {
+
+                    for (var i = 0; i < res.length; i++) {
+
+                        var price = (result.quantity * res[i].price);
+                        var roundedPrice = Math.round(price * 100) / 100;
+                        var displayPrice = "$" + roundedPrice;
 
 
-                    var item = res[i].product_name;
+                        var item = res[i].product_name;
 
-                    var itemID = result.id;
+                        var itemID = result.id;
 
 
-                    var amountRequested = result.quantity;
+                        var amountRequested = result.quantity;
 
-                    var amountInStock = res[i].stock_quantity;
+                        var amountInStock = res[i].stock_quantity;
 
-                    if (amountRequested > amountInStock) {
-                        console.log("Insufficient Quantity");
+                        if (amountRequested > amountInStock) {
+                            console.log("Insufficient Quantity");
 
-                        orderInput();
-                    } else {
-                        placeOrder(item, amountRequested, amountInStock, displayPrice, itemID);
+                            orderInput();
+                        } else {
+                            placeOrder(item, amountRequested, amountInStock, displayPrice, itemID);
+                        }
                     }
-
                 }
             })
         });
@@ -85,27 +91,25 @@ function updateDatebase(amountRequested, amountInStock, itemID) {
     console.log("new quantity" + newQuantity);
     console.log("id" + itemID);
 
-// UPDATE products
-// SET stock_quantity = newQuantity
-// WHERE item_id = result.id;
+    // UPDATE products
+    // SET stock_quantity = newQuantity
+    // WHERE item_id = result.id;
 
     // connection.query("UPDATE products SET stock_quantity = ? WHERE item_id=?" , [newQuantity],[itemID], function(err, res) {})
-          
-              connection.query(
-            "UPDATE products SET ? WHERE ?",
-            [
-              {
-                stock_quantity: newQuantity
-              },
-              {
-                item_id: itemID
-              }
-            ],
-            function(error) {
-              if (error) throw error;
-            }
-          );
 
-      //Only working sql so far: SELECT * FROM bamazon_db.products;
+    connection.query(
+        "UPDATE products SET ? WHERE ?", [{
+                stock_quantity: newQuantity
+            },
+            {
+                item_id: itemID
+            }
+        ],
+        function(error) {
+            if (error) throw error;
+        }
+    );
+
+    //Only working sql so far: SELECT * FROM bamazon_db.products;
 
 }
