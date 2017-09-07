@@ -18,7 +18,7 @@ connection.connect(function(err, res) {
 function selectAll() {
     connection.query("SELECT * FROM products", function(err, res) {
         if (err) throw err;
-        console.log(res);
+        
     });
 };
 
@@ -37,7 +37,7 @@ function orderInput() {
         .then(function(result) {
             connection.query("SELECT * FROM products WHERE item_id=?", [result.id], function(err, res) {
 
-            console.log(res.length);
+                // console.log(res.length);
 
                 if (res.length === 0) {
                     console.log("---------------");
@@ -64,7 +64,7 @@ function orderInput() {
 
                         if (amountRequested > amountInStock) {
                             console.log("---------------");
-                            console.log("Insufficient Quantity");
+                            console.log("Insufficient quantity");
                             console.log("---------------");
 
                             orderInput();
@@ -78,29 +78,22 @@ function orderInput() {
 };
 
 function placeOrder(item, amountRequested, amountInStock, displayPrice, itemID) {
-    var order = {
-        item: item,
-        quantity: amountRequested,
-        price: displayPrice,
-        id: itemID
-    }
-    var orderArr = [];
-    orderArr.push(order);
-    console.log("Your order: ")
-    console.log(orderArr);
+
+
     updateDatebase(amountRequested, amountInStock, itemID);
+
+    console.log("---------------");
+    console.log("id: " + itemID);
+    console.log("item: " + item);
+    console.log("quantity: " + amountRequested);
+    console.log("price: " + displayPrice);
+    console.log("---------------");
 }
 
 function updateDatebase(amountRequested, amountInStock, itemID) {
     var newQuantity = (amountInStock - amountRequested);
-    console.log("new quantity" + newQuantity);
-    console.log("id" + itemID);
-
-    // UPDATE products
-    // SET stock_quantity = newQuantity
-    // WHERE item_id = result.id;
-
-    // connection.query("UPDATE products SET stock_quantity = ? WHERE item_id=?" , [newQuantity],[itemID], function(err, res) {})
+    // console.log("new quantity" + newQuantity);
+    // console.log("id" + itemID);
 
     connection.query(
         "UPDATE products SET ? WHERE ?", [{
