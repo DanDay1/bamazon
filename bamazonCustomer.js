@@ -1,5 +1,9 @@
+//make a data.sql and a skima.sql
+
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+
+var manager = require("bamazonManager.js");
 
 var connection = mysql.createConnection({
     host: "localhost",
