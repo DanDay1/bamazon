@@ -76,6 +76,7 @@ function viewLowInventory() {
         var table = new Table({
             head: ["Product ID", "Product Name", "Department Name", "Price", "Quantity"],
             colWidths: [13, 20, 20, 13, 13],
+            wordWrap:true
         });
 
         for (var i = 0; i < res.length; i++) {
@@ -105,6 +106,7 @@ function addInventory() {
         var table = new Table({
             head: ["Product ID", "Product Name", "Department Name", "Price", "Quantity"],
             colWidths: [13, 20, 20, 13, 13],
+            wordWrap:true
         });
 
         for (var i = 0; i < res.length; i++) {
