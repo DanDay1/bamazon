@@ -1,5 +1,3 @@
-//make a data.sql and a skima.sql
-
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
@@ -11,6 +9,7 @@ var connection = mysql.createConnection({
     user: "root",
     password: "password",
     database: "bamazon_db"
+    // database: "inventory_db"
 });
 
 connection.connect(function(err, res) {
@@ -87,6 +86,8 @@ function placeOrder(item, amountRequested, amountInStock, displayPrice, itemID) 
     updateDatebase(amountRequested, amountInStock, itemID);
 
     console.log("---------------");
+    console.log("Order complete");
+    console.log("");
     console.log("id: " + itemID);
     console.log("item: " + item);
     console.log("quantity: " + amountRequested);
@@ -109,9 +110,15 @@ function updateDatebase(amountRequested, amountInStock, itemID) {
         ],
         function(error) {
             if (error) throw error;
+            exit();
         }
     );
 
     //Only working sql so far: SELECT * FROM bamazon_db.products;
 
+}
+
+function exit() {
+  connection.end();
+  console.log("Connection terminated");
 }

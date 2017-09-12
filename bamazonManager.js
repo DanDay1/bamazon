@@ -8,6 +8,7 @@ var connection = mysql.createConnection({
     user: "root",
     password: "password",
     database: "bamazon_db"
+    // database: "inventory_db"
 });
 
 connection.connect(function(err) {
@@ -53,6 +54,7 @@ function viewProducts() {
         var table = new Table({
             head: ["Product ID", "Product Name", "Department Name", "Price", "Quantity"],
             colWidths: [13, 20, 20, 13, 13],
+            wordWrap:true
         });
 
         for (var i = 0; i < res.length; i++) {
