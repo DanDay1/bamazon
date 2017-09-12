@@ -22,7 +22,7 @@ connection.connect(function(err, res) {
 function selectAll() {
     connection.query("SELECT * FROM products", function(err, res) {
         if (err) throw err;
-        
+
     });
 };
 
