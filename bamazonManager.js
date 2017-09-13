@@ -7,8 +7,8 @@ var connection = mysql.createConnection({
     port: 3306,
     user: "root",
     password: "password",
-    database: "bamazon_db"
-    // database: "inventory_db"
+    // database: "bamazon_db"
+    database: "bamazoninventory_db"
 });
 
 connection.connect(function(err) {
@@ -133,32 +133,34 @@ function addInventory() {
             connection.query("SELECT * FROM products WHERE item_id=?", [answers.itemNumber], function(err, res) {
 
                 console.log("res.length " + res.length);
-                console.log("res.stock_quantity " + res.stock_quantity);
+                console.log("res.stock_quantity " + res[0].stock_quantity);
+                console.log("res" + JSON.stringify(res));
                 console.log("err " + err);
-                console.log("res.price " + res.price);
+                console.log("res.price " + res[0].price);
 
                 console.log("howMany " + answers.howMany);
                 console.log("itemNumber " + answers.itemNumber);
 
-                var amountInStock = res.stock_quantity;
-                var amountAdded = res.howMany;
-                var productID = res.itemNumber;
+                var amountInStock = res[0].stock_quantity;
+                var amountAdded = answers.howMany;
+                var productID = res[0].itemNumber;
                 console.log("amountInStock " + amountInStock);
                 console.log("amountAdded " + amountAdded);
-                var newQuantity = (amountInStock + amountAdded);
+                var newQuantity = parseInt(amountInStock) + parseInt(amountAdded);
                 console.log("newQuantity " + newQuantity);
+                var displayID = parseInt(res[0].item_id);
 
-                connection.query(
+                var test = connection.query(
                     "UPDATE products SET ? WHERE ?", [{
                             stock_quantity: newQuantity
                         },
                         {
-                            item_id: productID
-                        }
+                            item_id: displayID                        }
                     ],
                     function(error) {
                         if (error) throw error;
                     })
+                console.log(test.sql);
             })
         })
     })
