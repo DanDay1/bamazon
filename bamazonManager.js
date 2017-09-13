@@ -150,7 +150,10 @@ function addInventory() {
                     function(error) {
                         if (error) throw error;
                     })
-                console.log(test.sql);
+                console.log("----------------");
+                console.log("Quantity updated");
+                console.log("----------------");
+                welcomeMenu();
             })
         })
     })
