@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
     user: "root",
     password: "password",
     database: "bamazon_db"
-    // database: "inventory_db"
+
 });
 
 connection.connect(function(err, res) {
@@ -40,7 +40,7 @@ function orderInput() {
         .then(function(result) {
             connection.query("SELECT * FROM products WHERE item_id=?", [result.id], function(err, res) {
 
-                // console.log(res.length);
+             ;
 
                 if (res.length === 0) {
                     console.log("---------------");
@@ -97,8 +97,7 @@ function placeOrder(item, amountRequested, amountInStock, displayPrice, itemID) 
 
 function updateDatebase(amountRequested, amountInStock, itemID) {
     var newQuantity = (amountInStock - amountRequested);
-    // console.log("new quantity" + newQuantity);
-    // console.log("id" + itemID);
+
 
     connection.query(
         "UPDATE products SET ? WHERE ?", [{
@@ -114,7 +113,6 @@ function updateDatebase(amountRequested, amountInStock, itemID) {
         }
     );
 
-    //Only working sql so far: SELECT * FROM bamazon_db.products;
 
 }
 
