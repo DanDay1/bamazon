@@ -128,26 +128,16 @@ function addInventory() {
             },
 
         ]).then(function(answers) {
-            console.log("part 1");
+            
 
             connection.query("SELECT * FROM products WHERE item_id=?", [answers.itemNumber], function(err, res) {
 
-                console.log("res.length " + res.length);
-                console.log("res.stock_quantity " + res[0].stock_quantity);
-                console.log("res" + JSON.stringify(res));
-                console.log("err " + err);
-                console.log("res.price " + res[0].price);
-
-                console.log("howMany " + answers.howMany);
-                console.log("itemNumber " + answers.itemNumber);
+              
 
                 var amountInStock = res[0].stock_quantity;
                 var amountAdded = answers.howMany;
                 var productID = res[0].itemNumber;
-                console.log("amountInStock " + amountInStock);
-                console.log("amountAdded " + amountAdded);
                 var newQuantity = parseInt(amountInStock) + parseInt(amountAdded);
-                console.log("newQuantity " + newQuantity);
                 var displayID = parseInt(res[0].item_id);
 
                 var test = connection.query(
