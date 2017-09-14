@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
     user: "root",
     password: "password",
     database: "bamazon_db"
-    
+
 });
 
 connection.connect(function(err) {
@@ -20,7 +20,7 @@ function welcomeMenu() {
     console.log("");
     inquirer.prompt([{
             type: "rawlist",
-            message: "Please enter number to select option, then hit return", 
+            message: "Please enter number to select option, then hit return",
             choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product", "Exit"],
             name: "action"
         }, ])
@@ -54,7 +54,7 @@ function viewProducts() {
         var table = new Table({
             head: ["Product ID", "Product Name", "Department Name", "Price", "Quantity"],
             colWidths: [13, 20, 20, 13, 13],
-            wordWrap:true
+            wordWrap: true
         });
 
         for (var i = 0; i < res.length; i++) {
@@ -76,14 +76,14 @@ function viewLowInventory() {
         var table = new Table({
             head: ["Product ID", "Product Name", "Department Name", "Price", "Quantity"],
             colWidths: [13, 20, 20, 13, 13],
-            wordWrap:true
+            wordWrap: true
         });
 
         for (var i = 0; i < res.length; i++) {
             if (res[i].stock_quantity < 5) {
                 table.push(
                     [res[i].item_id, res[i].product_name, res[i].department_name, res[i].price, res[i].stock_quantity]
-                    
+
                 );
             }
         }
@@ -106,7 +106,7 @@ function addInventory() {
         var table = new Table({
             head: ["Product ID", "Product Name", "Department Name", "Price", "Quantity"],
             colWidths: [13, 20, 20, 13, 13],
-            wordWrap:true
+            wordWrap: true
         });
 
         for (var i = 0; i < res.length; i++) {
@@ -128,11 +128,11 @@ function addInventory() {
             },
 
         ]).then(function(answers) {
-            
+
 
             connection.query("SELECT * FROM products WHERE item_id=?", [answers.itemNumber], function(err, res) {
 
-              
+
 
                 var amountInStock = res[0].stock_quantity;
                 var amountAdded = answers.howMany;
@@ -145,7 +145,8 @@ function addInventory() {
                             stock_quantity: newQuantity
                         },
                         {
-                            item_id: displayID                        }
+                            item_id: displayID
+                        }
                     ],
                     function(error) {
                         if (error) throw error;
@@ -161,7 +162,7 @@ function addInventory() {
 
 function addNewProduct() {
 
-	var newItemID;
+    var newItemID;
 
     connection.query('SELECT * FROM products', function(err, res) {
         if (err) throw err;
@@ -206,6 +207,6 @@ function addNewProduct() {
 }
 
 function exit() {
-	connection.end();
-	console.log("Connection terminated");
+    connection.end();
+    console.log("Connection terminated");
 }
