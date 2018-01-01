@@ -40,7 +40,7 @@ function orderInput() {
         .then(function(result) {
             connection.query("SELECT * FROM products WHERE item_id=?", [result.id], function(err, res) {
 
-             ;
+                ;
 
                 if (res.length === 0) {
                     console.log("---------------");
@@ -117,6 +117,6 @@ function updateDatebase(amountRequested, amountInStock, itemID) {
 }
 
 function exit() {
-  connection.end();
-  console.log("Connection terminated");
+    connection.end();
+    console.log("Connection terminated");
 }
